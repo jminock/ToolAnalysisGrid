@@ -52,8 +52,8 @@ RUN wget http://mirrors.concertpass.com/gcc/releases/gcc-8.5.0/gcc-8.5.0.tar.gz 
     && /gcc-8.5.0/configure --prefix=/gcc-85-install/ --disable-multilib \
     && make \
     && make install \
-	&& cd / \
-	&& rm -rf gcc-8.5.0/ gcc-85-build/
+    && cd / \
+    && rm -rf gcc-8.5.0/ gcc-85-build/
 
 #cmake 3.20.2
 RUN wget https://cmake.org/files/v3.20/cmake-3.20.2.tar.gz \
@@ -66,7 +66,7 @@ RUN wget https://cmake.org/files/v3.20/cmake-3.20.2.tar.gz \
     && /cmake-3.20.2/bootstrap \
     && make \
     && make install \
-	&& rm -rf cmake-3.20.2.tar.gz cmake-3.20.2/
+    && rm -rf cmake-3.20.2.tar.gz cmake-3.20.2/
 
 #python 3.8.13
 RUN wget https://www.python.org/ftp/python/3.8.10/Python-3.8.10.tar.xz \

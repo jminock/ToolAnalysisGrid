@@ -83,7 +83,7 @@ do
 	    Python3=0
 	    Pythia=0
 	    Clhep=0
-		Lhapdf=0
+	    Lhapdf=0
 	    Genie=0
 	    RATEventlib=0
 	    ;;
@@ -102,7 +102,7 @@ do
 	    Python3=0
 	    Pythia=0
 	    Clhep=0
-		Lhapdf=0
+	    Lhapdf=0
 	    Genie=0
 	    RATEventlib=0
 	    ;;
@@ -121,7 +121,7 @@ do
 	    Python3=0
 	    Pythia=0
 	    Clhep=0
-		Lhapdf=0
+	    Lhapdf=0
 	    Genie=0
 	    RATEventlib=0
 	    ;;
@@ -141,7 +141,7 @@ do
 	    Python3=0
 	    Pythia=0
 	    Clhep=0
-		Lhapdf=0
+	    Lhapdf=0
 	    Genie=0
 	    RATEventlib=0
 	    ;;
@@ -161,7 +161,7 @@ do
 	    Python3=0
 	    Pythia=0
 	    Clhep=0
-		Lhapdf=0
+	    Lhapdf=0
 	    Genie=0
 	    RATEventlib=0
 	    ;;
@@ -181,7 +181,7 @@ do
 	    Python3=0
 	    Pythia=0
 	    Clhep=0
-		Lhapdf=0
+	    Lhapdf=0
 	    Genie=0
 	    RATEventlib=0
 	    ;;
@@ -201,7 +201,7 @@ do
 	    Python3=0
 	    Pythia=0
 	    Clhep=0
-		Lhapdf=0
+	    Lhapdf=0
 	    Genie=0
 	    RATEventlib=0
 	    ;;
@@ -221,7 +221,7 @@ do
 	    Python3=1
 	    Pythia=0
 	    Clhep=0
-		Lhapdf=0
+	    Lhapdf=0
 	    Genie=0
 	    RATEventlib=0
 	    ;;
@@ -241,7 +241,7 @@ do
 	    Python3=0
 	    Pythia=1
 	    Clhep=0
-		Lhapdf=0
+	    Lhapdf=0
 	    Genie=0
 	    RATEventlib=0
 	    ;;
@@ -261,7 +261,7 @@ do
 	    Python3=0
 	    Pythia=0
 	    Clhep=1
-		Lhapdf=0
+	    Lhapdf=0
 	    Genie=0
 	    RATEventlib=0
 	    ;;
@@ -281,7 +281,7 @@ do
 	    Python3=0
 	    Pythia=0
 	    Clhep=0
-		Lhapdf=1
+	    Lhapdf=1
 	    Genie=0
 	    RATEventlib=0
 	    ;;
@@ -301,7 +301,7 @@ do
 	    Python3=0
 	    Pythia=0
 	    Clhep=0
-		Lhapdf=0
+	    Lhapdf=0
 	    Genie=1
 	    RATEventlib=0
 	    ;;
@@ -321,7 +321,7 @@ do
 	    Python3=0
 	    Pythia=0
 	    Clhep=0
-		Lhapdf=0
+	    Lhapdf=0
 	    Genie=0
 	    RATEventlib=1
 	    ;;
@@ -340,8 +340,8 @@ do
             Python=0
             Python3=0
             Pythia=0
-			Clhep=0
-			Lhapdf=0
+            Clhep=0
+            Lhapdf=0
             Genie=0
             RATEventlib=0
             PlotWaveforms=1
@@ -362,7 +362,7 @@ do
 	    Python3=0
 	    Pythia=0
 	    Clhep=0
-		Lhapdf=0
+	    Lhapdf=0
 	    Genie=0
 	    RATEventlib=0
 	    ;;
@@ -445,12 +445,15 @@ then
     cd ${BASEDIR}/ToolDAQ
     wget https://root.cern/download/root_v6.24.06.source.tar.gz
     tar -xzf root_v6.24.06.source.tar.gz
+    rm root_v6.24.06.source.tar.gz
     cd root-6.24.06
     mkdir install
     cd install
     cmake ../ -DCMAKE_CXX_STANDARD=14 -Dgdml=ON -Dxml=ON -Dmt=ON -Dmathmore=ON -Dx11=ON -Dimt=ON -Dtmva=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -Dpythia6=ON -Dfftw3=ON
     make -j8
     make install
+    cd ../
+    /bin/bash -O extglob -c 'rm -rf !(install)'
     source bin/thisroot.sh
 
 fi
@@ -506,9 +509,9 @@ then
     pip3 install uproot==4.3.7
     pip3 install xgboost==1.6.2
     pip3 install tensorflow==2.10.0
+    pip3 install PyQt5
     # set tensorflow verbosity to suppress info messages about not having a GPU or maximal acceleration
     # https://stackoverflow.com/questions/35911252/disable-tensorflow-debugging-information/42121886#42121886
-    echo "export TF_CPP_MIN_LOG_LEVEL=2" >> ${BASEDIR}/Setup.sh
     
     cd ${BASEDIR}/UserTools
     mkdir -p InactiveTools
@@ -535,7 +538,6 @@ then
     wget https://gist.githubusercontent.com/marc1uk/c0e32d955dd1c06ef69d80ce643018ad/raw/10e592d42737ecc7dca677e774ae66dcb5a3859d/fsplit.c
     gcc fsplit.c -o fsplit
     export PATH=$PWD:$PATH
-    echo "export PATH=$PWD:\$PATH" >> ${BASEDIR}/Setup.sh
     
     cd ${BASEDIR}/ToolDAQ
     cvs -d :pserver:anonymous@log4cpp.cvs.sourceforge.net:/cvsroot/log4cpp -z3 co log4cpp
@@ -572,8 +574,8 @@ then
     cmake -DCMAKE_INSTALL_PREFIX=/ToolAnalysis/ToolDAQ/2.4.0.2/CLHEP_install /ToolAnalysis/ToolDAQ/2.4.0.2/CLHEP
     cmake --build . --config RelWithDebInfo
     cmake --build . --target install
-	cd ..
-	rm -rf CLHEP CLHEP_build
+    cd ..
+    rm -rf CLHEP CLHEP_build
 fi
 
 if [ $Lhapdf -eq 1 ]
@@ -622,15 +624,18 @@ then
     
     cd ${BASEDIR}/ToolDAQ
     wget https://github.com/ANNIEsoft/GENIE-v3/archive/refs/heads/master.zip
-	ls
     unzip master.zip
     rm -rf master.zip
-    cd Generator-v3-master/
+    cd GENIE-v3-master/
     mkdir install
     export GENIE=`pwd`
-    ./configure --prefix=/ToolAnalysis/ToolDAQ/Generator-v3-master/install/ --enable-lhapdf6 --enable-rwght --enable-fnal --with-pythia6-inc=/ToolAnalysis/ToolDAQ/Pythia6Support/v6_424/inc/ --with-pythia6-lib=/ToolAnalysis/ToolDAQ/Pythia6Support/v6_424/lib/ --with-log4cpp-inc=/ToolAnalysis/ToolDAQ/log4cpp/include/ --with-log4cpp-lib=/ToolAnalysis/ToolDAQ/log4cpp/lib/
+    ./configure --prefix=/ToolAnalysis/ToolDAQ/GENIE-v3-master/install/ --enable-lhapdf6 --enable-rwght --enable-fnal --with-pythia6-inc=/ToolAnalysis/ToolDAQ/Pythia6Support/v6_424/inc/ --with-pythia6-lib=/ToolAnalysis/ToolDAQ/Pythia6Support/v6_424/lib/ --with-log4cpp-inc=/ToolAnalysis/ToolDAQ/log4cpp/include/ --with-log4cpp-lib=/ToolAnalysis/ToolDAQ/log4cpp/lib/
     make -j8
-    
+    make install
+    cd config
+    cp G18_10a/ModelConfiguration.xml .
+    cp G18_10a/TuneGeneratorList.xml .
+
     cd ${BASEDIR}/ToolDAQ
     wget https://github.com/uboone/Reweight/archive/refs/tags/v3_00_04_ub3.zip
     unzip v3_00_04_ub3.zip

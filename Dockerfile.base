@@ -1,7 +1,7 @@
 ### Created by Dr. Benjamin Richards (b.richards@qmul.ac.uk)
 
 ### Download base image from cern repo on docker hub
-FROM quay.io/centos/centos:stream8
+FROM fermilab/fnal-wn-sl7
 
 ### Run the following commands as super user (root):
 USER root
@@ -9,56 +9,29 @@ USER root
 #######################
 ### GCC ENVIRONMENT ###
 #######################
-
-RUN dnf config-manager --set-enabled extras,powertools \
-    && yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm \
-    && yum install -y https://repo.opensciencegrid.org/osg/3.6/osg-3.6-el8-release-latest.rpm \
-    && yum install -y \
-    gcc \
-    gcc-c++ \
-    gcc-gfortran \
-    libasan \
-    python38 \
-    python38-devel \
-    wget \
-    tar \
+RUN yum install -y \
+    python3-devel \
     cmake \
     binutils \
-    libX11-devel \
     libXpm-devel \
     libXft-devel \
-    libXext-devel \
-    libxml2-devel \
-    libpng \ 
-    libpng-devel \
     libjpeg-devel \
     graphviz-devel \
-    mesa-libGL-devel \
-    mesa-libGLU-devel \
-    make \
-    file \
     git \
-    patch \
     bzip2-devel \
     cvs \
     automake \
     svn  \ 
     libtool \
-    libxml2 \ 
-    which \
     gsl-devel \
     emacs \
-    curl \
-    curl-devel \
     osg-ca-certs \
-    osg-wn-client \
-    openssl-devel \
     fftw3 \
     fftw3-devel \
-    libnsl2-devel \
-    bzip2 \
     unzip \
-    gdb \
+    gmp-devel \
+    mpfr-devel \
+    libmpc-devel \
     libxkbcommon-x11 \
     xcb-util-wm \
     xcb-util-image \
@@ -67,10 +40,47 @@ RUN dnf config-manager --set-enabled extras,powertools \
     && yum clean all \
     && rm -rf /var/cache/yum
 
+#gcc 8.5.0
+RUN wget http://mirrors.concertpass.com/gcc/releases/gcc-8.5.0/gcc-8.5.0.tar.gz \
+    && tar zxf gcc-8.5.0.tar.gz \
+    && rm gcc-8.5.0.tar.gz \
+    && mkdir gcc-85-build \
+    && mkdir gcc-85-install \
+    && cd gcc-8.5.0/ \
+    && ./contrib/download_prerequisites \
+    && cd ../gcc-85-build/ \
+    && /gcc-8.5.0/configure --prefix=/gcc-85-install/ --disable-multilib \
+    && make \
+    && make install \
+    && cd / \
+    && rm -rf gcc-8.5.0/ gcc-85-build/
 
-Run git clone https://github.com/ANNIEsoft/ToolAnalysis.git; chmod -R 777 /ToolAnalysis ; cd ToolAnalysis ; ./GetToolDAQ.sh --ToolDAQ_ZMQ;
+#cmake 3.20.2
+RUN wget https://cmake.org/files/v3.20/cmake-3.20.2.tar.gz \
+    && tar -xf cmake-3.20.2.tar.gz \
+    && mkdir cmake-3.20.2-build \
+    && cd cmake-3.20.2-build/ \
+    && export LD_LIBRARY_PATH=/gcc-85-install/lib64/:/gcc-85-install/lib/:$LD_LIBRARY_PATH \
+    && export LD_RUN_PATH=/gcc-85-install/lib64/:/gcc-85-install/lib/:$LD_RUN_PATH \
+    && export PATH=/gcc-85-install/bin/:$PATH \
+    && /cmake-3.20.2/bootstrap \
+    && make \
+    && make install \
+    && rm -rf cmake-3.20.2.tar.gz cmake-3.20.2/
+
+#python 3.8.13
+RUN wget https://www.python.org/ftp/python/3.8.10/Python-3.8.10.tar.xz \
+    && tar -xf Python-3.8.10.tar.xz \
+    && cd Python-3.8.10/ \
+    && export LD_LIBRARY_PATH=/gcc-85-install/lib64/:/gcc-85-install/lib/:$LD_LIBRARY_PATH \
+    && export LD_RUN_PATH=/gcc-85-install/lib64/:/gcc-85-install/lib/:$LD_RUN_PATH \
+    && export PATH=/cmake-3.20.2-build/bin/:/gcc-85-install/bin/:$PATH \
+    && ./configure \
+    && make \
+    && make install
+
+Run git clone https://github.com/jminock/ToolAnalysisGrid.git; chmod -R 777 /ToolAnalysis ; cd ToolAnalysis ; ./GetToolDAQ.sh --ToolDAQ_ZMQ;
 Run cd ToolAnalysis ; ./GetToolDAQ.sh --Boost;
-Run alternatives --set python3 /usr/bin/python3.8;
 Run cd ToolAnalysis ; ./GetToolDAQ.sh --Pythia;
 Run cd ToolAnalysis ; ./GetToolDAQ.sh --Root6;
 Run cd ToolAnalysis ; ./GetToolDAQ.sh --Python3; chmod -R 777 /ToolAnalysis/UserTools;

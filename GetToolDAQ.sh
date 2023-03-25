@@ -335,13 +335,13 @@ do
             boostflag=0
             zmq=0
             final=0
-            MrdTrackLib=0
+            MrdTrackLib=1
             WCSimlib=0
             Python=0
             Python3=0
             Pythia=0
-	    Clhep=0
-	    Lhapdf=0
+            Clhep=0
+            Lhapdf=0
             Genie=0
             RATEventlib=0
             PlotWaveforms=1
@@ -381,13 +381,20 @@ fi
 if [ $tooldaq -eq 1 ]
 then
     cd ${BASEDIR}/ToolDAQ
-    #git clone https://github.com/ToolDAQ/ToolDAQFramework.git
-    git clone https://github.com/ANNIEsoft/ToolDAQFramework.git
+    git clone https://github.com/ToolDAQ/ToolDAQFramework.git
+    # ANNIE currently uses an old version
+    cd ToolDAQFramework
+    git checkout a06f13d09845c4f0fb679946f3c385dae406e2fe
 fi
 
 if [ $zmq -eq 1 ]
 then
     
+    if [ $fnalflag -eq 1 ]; then
+      source SetupFNAL.sh
+    else
+      source Setup.sh
+    fi
     cd ${BASEDIR}/ToolDAQ
     git clone https://github.com/ToolDAQ/zeromq-4.0.7.git
     
@@ -403,7 +410,12 @@ fi
 
 if [ $boostflag -eq 1 ]
 then
-    
+
+    if [ $fnalflag -eq 1 ]; then
+      source SetupFNAL.sh
+    else
+      source Setup.sh
+    fi
     cd ${BASEDIR}/ToolDAQ
     wget http://downloads.sourceforge.net/project/boost/boost/1.66.0/boost_1_66_0.tar.gz
     tar zxf boost_1_66_0.tar.gz
@@ -500,7 +512,6 @@ then
     pip3 install PyQt5
     # set tensorflow verbosity to suppress info messages about not having a GPU or maximal acceleration
     # https://stackoverflow.com/questions/35911252/disable-tensorflow-debugging-information/42121886#42121886
-    #echo "export TF_CPP_MIN_LOG_LEVEL=2" >> ${BASEDIR}/Setup.sh   # already done
     
     cd ${BASEDIR}/UserTools
     mkdir -p InactiveTools
@@ -527,7 +538,6 @@ then
     wget https://gist.githubusercontent.com/marc1uk/c0e32d955dd1c06ef69d80ce643018ad/raw/10e592d42737ecc7dca677e774ae66dcb5a3859d/fsplit.c
     gcc fsplit.c -o fsplit
     export PATH=$PWD:$PATH
-    #echo "export PATH=$PWD:\$PATH" >> ${BASEDIR}/Setup.sh     # already done
     
     cd ${BASEDIR}/ToolDAQ
     cvs -d :pserver:anonymous@log4cpp.cvs.sourceforge.net:/cvsroot/log4cpp -z3 co log4cpp
@@ -614,7 +624,6 @@ then
     
     cd ${BASEDIR}/ToolDAQ
     wget https://github.com/ANNIEsoft/GENIE-v3/archive/refs/heads/master.zip
-    ls
     unzip master.zip
     rm -rf master.zip
     cd GENIE-v3-master/
@@ -626,7 +635,7 @@ then
     cd config
     cp G18_10a/ModelConfiguration.xml .
     cp G18_10a/TuneGeneratorList.xml .
-    
+
     cd ${BASEDIR}/ToolDAQ
     wget https://github.com/uboone/Reweight/archive/refs/tags/v3_00_04_ub3.zip
     unzip v3_00_04_ub3.zip

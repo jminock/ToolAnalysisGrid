@@ -79,19 +79,19 @@ RUN wget https://www.python.org/ftp/python/3.8.10/Python-3.8.10.tar.xz \
     && make \
     && make install
 
-Run git clone https://github.com/jminock/ToolAnalysisGrid.git; chmod -R 777 /ToolAnalysis ; cd ToolAnalysis ; ./GetToolDAQ.sh --ToolDAQ_ZMQ;
-Run cd ToolAnalysis ; ./GetToolDAQ.sh --Boost;
-Run cd ToolAnalysis ; ./GetToolDAQ.sh --Pythia;
-Run cd ToolAnalysis ; ./GetToolDAQ.sh --Root6;
-Run cd ToolAnalysis ; ./GetToolDAQ.sh --Python3; chmod -R 777 /ToolAnalysis/UserTools;
-Run cd ToolAnalysis ; ./GetToolDAQ.sh --Clhep;
-Run cd ToolAnalysis ; ./GetToolDAQ.sh --Lhapdf;
-Run cd ToolAnalysis ; ./GetToolDAQ.sh --Genie;
-Run cd ToolAnalysis ; ./GetToolDAQ.sh --RATEventlib; chmod -R 777 /ToolAnalysis/ToolDAQ/RATEventLib;
-Run cd ToolAnalysis ; ./GetToolDAQ.sh --WCSim; chmod -R 777 /ToolAnalysis/ToolDAQ/WCSimLib;
-Run cd ToolAnalysis ; ./GetToolDAQ.sh --MrdTrackLib; chmod -R 777 /ToolAnalysis/ToolDAQ/MrdTrackLib;
-Run cd ToolAnalysis ; ./GetToolDAQ.sh --PlotWaveforms; chmod -R 777 /ToolAnalysis/UserTools/PlotWaveforms;
-Run cd ToolAnalysis ; ./GetToolDAQ.sh --Final;
+Run git clone https://github.com/jminock/ToolAnalysisGrid.git; chmod -R 777 /ToolAnalysisGrid ; cd ToolAnalysisGrid ; ./GetToolDAQ.sh --ToolDAQ_ZMQ;
+Run cd ToolAnalysisGrid ; ./GetToolDAQ.sh --Boost;
+Run cd ToolAnalysisGrid; ./GetToolDAQ.sh --Pythia;
+Run cd ToolAnalysisGrid ; ./GetToolDAQ.sh --Root6;
+Run cd ToolAnalysisGrid ; ./GetToolDAQ.sh --Python3; chmod -R 777 /ToolAnalysisGrid/UserTools;
+Run cd ToolAnalysisGrid ; ./GetToolDAQ.sh --Clhep;
+Run cd ToolAnalysisGrid ; ./GetToolDAQ.sh --Lhapdf;
+Run cd ToolAnalysisGrid ; ./GetToolDAQ.sh --Genie;
+Run cd ToolAnalysisGrid ; ./GetToolDAQ.sh --RATEventlib; chmod -R 777 /ToolAnalysisGrid/ToolDAQ/RATEventLib;
+Run cd ToolAnalysisGrid ; ./GetToolDAQ.sh --WCSim; chmod -R 777 /ToolAnalysisGrid/ToolDAQ/WCSimLib;
+Run cd ToolAnalysisGrid ; ./GetToolDAQ.sh --MrdTrackLib; chmod -R 777 /ToolAnalysisGrid/ToolDAQ/MrdTrackLib;
+Run cd ToolAnalysisGrid ; ./GetToolDAQ.sh --PlotWaveforms; chmod -R 777 /ToolAnalysisGrid/UserTools/PlotWaveforms;
+Run cd ToolAnalysisGrid ; ./GetToolDAQ.sh --Final;
 Run mkdir /pnfs /annie /cvmfs; chmod 777 /pnfs /annie /cvmfs;
 
 ### Open terminal

@@ -550,7 +550,7 @@ then
     git clone https://github.com/GENIE-MC-Community/Pythia6Support.git
     cd Pythia6Support
     ./build_pythia6.sh --dummies=remove
-    export PYTHIA6_DIR=/ToolAnalysis/ToolDAQ/Pythia6Support/v6_424/
+    export PYTHIA6_DIR=/ToolAnalysisGrid/ToolDAQ/Pythia6Support/v6_424/
     
 fi
 
@@ -571,7 +571,7 @@ then
     cd 2.4.0.2
     mkdir CLHEP_build CLHEP_install
     cd CLHEP_build
-    cmake -DCMAKE_INSTALL_PREFIX=/ToolAnalysis/ToolDAQ/2.4.0.2/CLHEP_install /ToolAnalysis/ToolDAQ/2.4.0.2/CLHEP
+    cmake -DCMAKE_INSTALL_PREFIX=/ToolAnalysisGrid/ToolDAQ/2.4.0.2/CLHEP_install /ToolAnalysisGrid/ToolDAQ/2.4.0.2/CLHEP
     cmake --build . --config RelWithDebInfo
     cmake --build . --target install
     cd ..
@@ -594,7 +594,7 @@ then
     rm -rf LHAPDF-6.3.0.tar.gz
     cd LHAPDF-6.3.0
     mkdir install
-    ./configure --prefix=/ToolAnalysis/ToolDAQ/LHAPDF-6.3.0/install
+    ./configure --prefix=/ToolAnalysisGrid/ToolDAQ/LHAPDF-6.3.0/install
     make
     make install
     cd install/share/LHAPDF
@@ -629,7 +629,7 @@ then
     cd GENIE-v3-master/
     mkdir install
     export GENIE=`pwd`
-    ./configure --prefix=/ToolAnalysis/ToolDAQ/GENIE-v3-master/install/ --enable-lhapdf6 --enable-rwght --enable-fnal --with-pythia6-inc=/ToolAnalysis/ToolDAQ/Pythia6Support/v6_424/inc/ --with-pythia6-lib=/ToolAnalysis/ToolDAQ/Pythia6Support/v6_424/lib/ --with-log4cpp-inc=/ToolAnalysis/ToolDAQ/log4cpp/include/ --with-log4cpp-lib=/ToolAnalysis/ToolDAQ/log4cpp/lib/
+    ./configure --prefix=/ToolAnalysisGrid/ToolDAQ/GENIE-v3-master/install/ --enable-lhapdf6 --enable-rwght --enable-fnal --with-pythia6-inc=/ToolAnalysisGrid/ToolDAQ/Pythia6Support/v6_424/inc/ --with-pythia6-lib=/ToolAnalysisGrid/ToolDAQ/Pythia6Support/v6_424/lib/ --with-log4cpp-inc=/ToolAnalysisGrid/ToolDAQ/log4cpp/include/ --with-log4cpp-lib=/ToolAnalysisGrid/ToolDAQ/log4cpp/lib/
     make -j8
     make install
     cd config

@@ -19,7 +19,7 @@ export LHAPATH=${ToolDAQapp}/ToolDAQ/LHAPDF-6.3.0/install/share/LHAPDF/
 export GENIE=${ToolDAQapp}/ToolDAQ/GENIE-v3-master
 export GENIE_REWEIGHT=${ToolDAQapp}/ToolDAQ/Reweight-3_00_04_ub3/
 
-export PATH=/cmake-3.20.2-build/bin/:/gcc-85-install/bin/:${ToolDAQapp}/ToolDAQ/LHAPDF-6.3.0/install/bin:$GENIE/bin:$GENIE_REWEIGHT/bin:/ToolAnalysis/ToolDAQ/fsplit:$PATH
+export PATH=/cmake-3.20.2-build/bin/:/gcc-85-install/bin/:${ToolDAQapp}/ToolDAQ/LHAPDF-6.3.0/install/bin:$GENIE/bin:$GENIE_REWEIGHT/bin:/ToolAnalysisGrid/ToolDAQ/fsplit:$PATH
 
 export TF_CPP_MIN_LOG_LEVEL=2
 
